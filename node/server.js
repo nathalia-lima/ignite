@@ -29,7 +29,7 @@ import http from 'node:http'
 
 // para habilitar o uso das importações utilizando o ESModules adicione no arquivo package.json a propriedade "type" com o valor de "module"
 
-//cabeçalhos (requisição/resposta) = metadados
+//cabeçalhos (requisição/resposta) = metadados ---- Metadados da requisição HTTP que podem incluir informações adicionais da requisição e resposta
 
 const users = []
 //toda vez que o servidor reinicia a informação vai embora, pois é local
