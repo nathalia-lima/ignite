@@ -33,10 +33,27 @@ get /users = buscando um usuario no backend
 const users = []
 //toda vez que o servidor reinicia a informação vai embora, pois é local
 
-const server = http.createServer((req, res) => { //significa: request e response
+const server = http.createServer(async (req, res) => { //significa: request e response
     const { method, url} = req
 
     //console.log(method, url)
+
+    const buffers = []
+
+    for await (const chunk of req){
+        buffers.push(chunk)
+    }
+
+    try {
+        req.body = JSON.parse(Buffer.concat(buffers).toString())
+    } catch {
+        req.body = null
+    }
+
+    
+
+    //console.log(body)
+    //console.log(body.name)
 
     if (method == 'GET' && url == '/users'){
         return res
@@ -45,10 +62,13 @@ const server = http.createServer((req, res) => { //significa: request e response
     }
 
     if (method == 'POST' && url == '/users'){
+
+        const {name, email} = req.body
+
         users.push({
             id: 1,
-            name: 'Nath',
-            email: 'nath@exemplo.com'
+            name,
+            email,
         })
         return res.writeHead(201).end()
     }
